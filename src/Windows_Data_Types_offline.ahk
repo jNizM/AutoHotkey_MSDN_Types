@@ -3,14 +3,14 @@
 ; Win Version ...: Windows 7 Professional x64 SP1
 ; Description ...: Windows Data Types for AHK
 ;                  (https://msdn.microsoft.com/en-us/library/aa383751.aspx)
-; Version .......: v0.1
-; Modified ......: 2015.05.04-1833
+; Version .......: v0.2
+; Modified ......: 2015.05.04-1927
 ; Author ........: jNizM (+ just me for the translation)
 ; Licence .......: Unlicense (http://unlicense.org/)
 ; ===============================================================================================================================
 ;@Ahk2Exe-SetName Windows_Data_Types_for_AHK
 ;@Ahk2Exe-SetDescription Windows Data Types for AHK
-;@Ahk2Exe-SetVersion v0.1
+;@Ahk2Exe-SetVersion v0.2
 ;@Ahk2Exe-SetCopyright Copyright (c) 2015-2015`, jNizM
 ;@Ahk2Exe-SetOrigFilename Windows_Data_Types_for_AHK.ahk
 ; ===============================================================================================================================
