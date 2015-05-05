@@ -18,9 +18,9 @@ Translated MSDN Types for DllCall's in AutoHotkey
 
 ## Screenshot
 ### After start
-![AHK_MSDN_Types_1](AHK_MSDN_Types_1.PNG)
+![AHK_MSDN_Types_1](AHK_MSDN_Types_1.png)
 ### After search something
-![AHK_MSDN_Types_2](AHK_MSDN_Types_2.PNG)
+![AHK_MSDN_Types_2](AHK_MSDN_Types_2.png)
 
 
 ## Info
