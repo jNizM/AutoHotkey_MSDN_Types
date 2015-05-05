@@ -3,14 +3,14 @@
 ; Win Version ...: Windows 7 Professional x64 SP1
 ; Description ...: Windows Data Types for AHK
 ;                  (https://msdn.microsoft.com/en-us/library/aa383751.aspx)
-; Version .......: v0.1
-; Modified ......: 2015.03.22-1732
+; Version .......: v0.2
+; Modified ......: 2015.05.04-1927
 ; Author ........: jNizM (+ just me for the translation)
 ; Licence .......: Unlicense (http://unlicense.org/)
 ; ===============================================================================================================================
 ;@Ahk2Exe-SetName Windows_Data_Types_for_AHK
 ;@Ahk2Exe-SetDescription Windows Data Types for AHK
-;@Ahk2Exe-SetVersion v0.1
+;@Ahk2Exe-SetVersion v0.2
 ;@Ahk2Exe-SetCopyright Copyright (c) 2015-2015`, jNizM
 ;@Ahk2Exe-SetOrigFilename Windows_Data_Types_for_AHK.ahk
 ; ===============================================================================================================================
@@ -21,7 +21,7 @@
 #NoEnv
 #SingleInstance Force
 
-global csv := DownloadToString("https://db.tt/hMXSlKF3")
+global csv := DownloadToString("https://raw.githubusercontent.com/jNizM/AutoHotkey_MSDN_Types/master/src/Windows_Data_Types.csv")
 
 ; GUI ===========================================================================================================================
 
@@ -37,16 +37,16 @@ Gui, +LastFound
 WinSet, Redraw
 
 ListView:
-	MSDN_TYPES_ARR := []
-	loop, parse, csv, `n, `r
-	{
-		loop, parse, A_LoopField, csv
-		{
-			MSDN_TYPES_ARR := StrSplit(A_LoopField, ";")
-			LV_Add("", MSDN_TYPES_ARR[1], MSDN_TYPES_ARR[2], MSDN_TYPES_ARR[3], MSDN_TYPES_ARR[4], MSDN_TYPES_ARR[5]), LV_ModifyCol(1, "Sort")
-		}
-	}
-	GuiControl,, EditEntries, % LV_GetCount()
+    MSDN_TYPES_ARR := []
+    loop, parse, csv, `n, `r
+    {
+        loop, parse, A_LoopField, csv
+        {
+            MSDN_TYPES_ARR := StrSplit(A_LoopField, ";")
+            LV_Add("", MSDN_TYPES_ARR[1], MSDN_TYPES_ARR[2], MSDN_TYPES_ARR[3], MSDN_TYPES_ARR[4], MSDN_TYPES_ARR[5]), LV_ModifyCol(1, "Sort")
+        }
+    }
+    GuiControl,, EditEntries, % LV_GetCount()
     GuiControl, Focus, EditSearch
 return
 
@@ -61,18 +61,18 @@ GuiSize:
 return
 
 LVSearch:
-	Gui, Submit, NoHide
-	LV_Delete(), MSDN_TYPES_ARR := []
-	loop, parse, csv, `n, `r
-	{
-		loop, parse, A_LoopField, csv
-		{
-			MSDN_TYPES_ARR := StrSplit(A_LoopField, ";")
-			if (InStr(MSDN_TYPES_ARR[1], EditSearch))
-				LV_Add("", MSDN_TYPES_ARR[1], MSDN_TYPES_ARR[2], MSDN_TYPES_ARR[3], MSDN_TYPES_ARR[4], MSDN_TYPES_ARR[5]), LV_ModifyCol(1, "Sort")
-		}
-	}
-	GuiControl,, EditEntries, % LV_GetCount()
+    Gui, Submit, NoHide
+    LV_Delete(), MSDN_TYPES_ARR := []
+    loop, parse, csv, `n, `r
+    {
+        loop, parse, A_LoopField, csv
+        {
+            MSDN_TYPES_ARR := StrSplit(A_LoopField, ";")
+            if (InStr(MSDN_TYPES_ARR[1], EditSearch))
+                LV_Add("", MSDN_TYPES_ARR[1], MSDN_TYPES_ARR[2], MSDN_TYPES_ARR[3], MSDN_TYPES_ARR[4], MSDN_TYPES_ARR[5]), LV_ModifyCol(1, "Sort")
+        }
+    }
+    GuiControl,, EditEntries, % LV_GetCount()
 return
 
 ; FUNCTIONS =====================================================================================================================

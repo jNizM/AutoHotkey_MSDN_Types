@@ -4,7 +4,7 @@
 ; Description ...: Windows Data Types for AHK
 ;                  (https://msdn.microsoft.com/en-us/library/aa383751.aspx)
 ; Version .......: v0.1
-; Modified ......: 2015.03.22-1732
+; Modified ......: 2015.05.04-1833
 ; Author ........: jNizM (+ just me for the translation)
 ; Licence .......: Unlicense (http://unlicense.org/)
 ; ===============================================================================================================================
