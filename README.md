@@ -12,7 +12,7 @@ Translated MSDN Types for DllCall's in AutoHotkey
 
 
 ## Contributing
-* special thanks to just me
+* special thanks to just me and TheArkive
 
 
 ## Questions / Bugs / Issues
