@@ -4,7 +4,7 @@
 	WinAPI_DataTypes (written in AutoHotkey)
 	Author ....: jNizM
 	Released ..: 2015-05-05
-	Modified ..: 2021-02-03
+	Modified ..: 2021-02-04
 	License ...: MIT
 	GitHub ....: https://github.com/jNizM/AutoHotkey_MSDN_Types
 	Forum .....: https://www.autohotkey.com/boards/viewtopic.php?t=99817
@@ -14,14 +14,14 @@
 ; COMPILER DIRECTIVES =======================================================================================================================================================
 
 ;@Ahk2Exe-SetDescription    WinAPI_DataTypes (x64)
-;@Ahk2Exe-SetFileVersion    0.1
+;@Ahk2Exe-SetFileVersion    0.2
 ;@Ahk2Exe-SetProductName    WinAPI_DataTypes
 ;@Ahk2Exe-SetProductVersion 2.0-beta.3
 ;@Ahk2Exe-SetCopyright      (c) 2015-2022 jNizM
 ;@Ahk2Exe-SetLanguage       0x0407
 
 
-; SCRIPT DIRECTIVES =======================================================================================================================================================
+; SCRIPT DIRECTIVES =========================================================================================================================================================
 
 #Requires AutoHotkey v2.0-
 
@@ -30,6 +30,7 @@
 ; RUN =======================================================================================================================================================================
 
 WinAPI_DataTypes()
+; WinAPI_DataTypes("Dark") <- Dark Theme
 
 
 
@@ -39,16 +40,16 @@ WinAPI_DataTypes(GuiTheme := "Light")
 {
 	static DATA_TYPES := CONST_DATA_TYPES()
 
-	App := Map("name", "WinAPI_DataTypes", "version", "0.1", "release", "2022-02-02", "author", "jNizM", "licence", "MIT")
+	App := Map("name", "WinAPI_DataTypes", "version", "0.2", "release", "2022-02-04", "author", "jNizM", "licence", "MIT")
 
 
-	; TRAY ==================================================================================================================================================================
+	; TRAY ==============================================================================================================================================================
 
 	if (VerCompare(A_OSVersion, "10.0.22000") >= 0)
 		TraySetIcon("shell32.dll", 56)
 
 
-	; GUI ===================================================================================================================================================================
+	; GUI ===============================================================================================================================================================
 
 	Main := Gui("+Resize +MinSize854x480", App["name"])
 	Main.BackColor := (GuiTheme = "Dark") ? "3E3E3E" : ""
@@ -56,7 +57,8 @@ WinAPI_DataTypes(GuiTheme := "Light")
 	Main.MarginY := 0
 
 	Main.SetFont("s9", "Segoe UI")
-	LV := Main.AddListView("xm+10 ym+10 w830 r10" ((GuiTheme = "Dark") ? " cD9D9D9 Background5B5B5B" : ""), ["Data Type", "AHK Type", "Alternative for DllCall()", "x86 Size", "x64 Size", "MSDN Definition"])
+	LV_Header := ["Data Type", "AHK Type", "Alternative for DllCall()", "x86 Size", "x64 Size", "MSDN Definition"]
+	LV := Main.AddListView("xm+10 ym+10 w830 r10" ((GuiTheme = "Dark") ? " cD9D9D9 Background5B5B5B" : ""), LV_Header)
 	for k, v in DATA_TYPES
 		LV.Add("", DATA_TYPES[k]*)
 	loop LV.GetCount("Col")
@@ -84,7 +86,7 @@ WinAPI_DataTypes(GuiTheme := "Light")
 	}
 
 
-	; WINDOW EVENTS =========================================================================================================================================================
+	; WINDOW EVENTS =====================================================================================================================================================
 
 	GuiSize(thisGui, MinMax, Width, Height)
 	{
@@ -105,8 +107,10 @@ WinAPI_DataTypes(GuiTheme := "Light")
 			IsFound := false
 			for i, v in DATA_TYPES[k]
 			{
-				if !(CtrlObj.Value) || (InStr(v, CtrlObj.Value))
-					IsFound := true
+				;if !(CtrlObj.Value) || (InStr(v, CtrlObj.Value))
+				try
+					if (RegExMatch(v, "i)" CtrlObj.Value))
+						IsFound := true
 			}
 			if !(IsFound)
 				continue
@@ -118,7 +122,7 @@ WinAPI_DataTypes(GuiTheme := "Light")
 	}
 
 
-	; Messages ==============================================================================================================================================================
+	; Messages ==========================================================================================================================================================
 
 	EM_SETCUEBANNER(handle, string, option := false)
 	{
@@ -129,12 +133,12 @@ WinAPI_DataTypes(GuiTheme := "Light")
 	}
 
 
-	; Constants =============================================================================================================================================================
+	; Constants =========================================================================================================================================================
 
 	CONST_DATA_TYPES()
 	{
 		DATA_TYPES := Map()
-		DATA_TYPES["ATOM"] := ["ATOM",    "UShort", "", 2, 2, "typedef WORD ATOM"]
+		DATA_TYPES["ATOM"] := ["ATOM", "UShort", "", 2, 2, "typedef WORD ATOM"]
 		DATA_TYPES["BOOL"] := ["BOOL","Int","",4,4,"typedef int BOOL"]
 		DATA_TYPES["BOOLEAN"] := ["BOOLEAN","UChar","",1,1,"typedef BYTE BOOLEAN"]
 		DATA_TYPES["BYTE"] := ["BYTE","UChar","",1,1,"typedef unsigned char BYTE"]
@@ -298,7 +302,7 @@ WinAPI_DataTypes(GuiTheme := "Light")
 		DATA_TYPES["ULONG64"] := ["ULONG64","Int64","",8,8,"typedef unsigned __int64 ULONG64"]
 		DATA_TYPES["USHORT"] := ["USHORT","UShort","",2,2,"typedef unsigned short USHORT"]
 		DATA_TYPES["USN"] := ["USN","Int64","",8,8,"typedef LONGLONG USN"]
-		DATA_TYPES["VOID"] := ["VOID","Ptr","","","","#define VOID void"]
+		DATA_TYPES["VOID"] := ["VOID","Ptr","",4,8,"#define VOID void"]
 		DATA_TYPES["WCHAR"] := ["WCHAR","UShort","",2,2,"typedef wchar_t WCHAR"]
 		DATA_TYPES["WORD"] := ["WORD","UShort","",2,2,"typedef unsigned short WORD"]
 		DATA_TYPES["WPARAM"] := ["WPARAM","UPtr","",4,8,"typedef UINT_PTR WPARAM"]
