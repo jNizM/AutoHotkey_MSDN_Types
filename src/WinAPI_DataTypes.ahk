@@ -14,7 +14,7 @@
 ; COMPILER DIRECTIVES =======================================================================================================================================================
 
 ;@Ahk2Exe-SetDescription    WinAPI_DataTypes (x64)
-;@Ahk2Exe-SetFileVersion    0.2
+;@Ahk2Exe-SetFileVersion    0.3
 ;@Ahk2Exe-SetProductName    WinAPI_DataTypes
 ;@Ahk2Exe-SetProductVersion 2.0-beta.3
 ;@Ahk2Exe-SetCopyright      (c) 2015-2022 jNizM
@@ -30,7 +30,7 @@
 ; RUN =======================================================================================================================================================================
 
 WinAPI_DataTypes()
-; WinAPI_DataTypes("Dark") <- Dark Theme
+;WinAPI_DataTypes("Dark") ;<- Dark Theme
 
 
 
@@ -40,7 +40,7 @@ WinAPI_DataTypes(GuiTheme := "Light")
 {
 	static DATA_TYPES := CONST_DATA_TYPES()
 
-	App := Map("name", "WinAPI_DataTypes", "version", "0.2", "release", "2022-02-04", "author", "jNizM", "licence", "MIT")
+	App := Map("name", "WinAPI_DataTypes", "version", "0.3", "release", "2022-02-04", "author", "jNizM", "licence", "MIT")
 
 
 	; TRAY ==============================================================================================================================================================
@@ -116,8 +116,6 @@ WinAPI_DataTypes(GuiTheme := "Light")
 				continue
 			LV.Add("", DATA_TYPES[k]*)
 		}
-		loop LV.GetCount("Col")
-			LV.ModifyCol(A_Index, "AutoHdr")
 		LV.Opt("+Redraw")
 	}
 
