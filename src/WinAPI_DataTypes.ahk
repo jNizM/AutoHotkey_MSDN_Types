@@ -14,7 +14,7 @@
 ; COMPILER DIRECTIVES =======================================================================================================================================================
 
 ;@Ahk2Exe-SetDescription    WinAPI_DataTypes (x64)
-;@Ahk2Exe-SetFileVersion    0.3
+;@Ahk2Exe-SetFileVersion    0.4
 ;@Ahk2Exe-SetProductName    WinAPI_DataTypes
 ;@Ahk2Exe-SetProductVersion 2.0-beta.3
 ;@Ahk2Exe-SetCopyright      (c) 2015-2022 jNizM
@@ -40,7 +40,7 @@ WinAPI_DataTypes(GuiTheme := "Light")
 {
 	static DATA_TYPES := CONST_DATA_TYPES()
 
-	App := Map("name", "WinAPI_DataTypes", "version", "0.3", "release", "2022-02-04", "author", "jNizM", "licence", "MIT")
+	App := Map("name", "WinAPI_DataTypes", "version", "0.4", "release", "2022-02-04", "author", "jNizM", "licence", "MIT")
 
 
 	; TRAY ==============================================================================================================================================================
@@ -72,6 +72,7 @@ WinAPI_DataTypes(GuiTheme := "Light")
 	Main.OnEvent("Size", GuiSize)
 	Main.OnEvent("Close", (*) => ExitApp)
 	Main.Show("AutoSize")
+	HideFocusBorder(Main.Hwnd)
 
 
 	if (VerCompare(A_OSVersion, "10.0.17763") >= 0) && (GuiTheme = "Dark")
@@ -82,8 +83,10 @@ WinAPI_DataTypes(GuiTheme := "Light")
 			DWMWA_USE_IMMERSIVE_DARK_MODE := 20
 		}
 		DllCall("dwmapi\DwmSetWindowAttribute", "Ptr", Main.hWnd, "Int", DWMWA_USE_IMMERSIVE_DARK_MODE, "int*", true, "Int", 4)
-		DllCall("uxtheme\SetWindowTheme", "Ptr", LV.hWnd, "Str", "DarkMode_Explorer", "Ptr", 0)
+		SetExplorerTheme(LV.hWnd, "DarkMode_Explorer")
 	}
+	else
+		SetExplorerTheme(LV.hWnd)
 
 
 	; WINDOW EVENTS =====================================================================================================================================================
@@ -128,6 +131,44 @@ WinAPI_DataTypes(GuiTheme := "Light")
 		static EM_SETCUEBANNER := ECM_FIRST + 1
 
 		SendMessage(EM_SETCUEBANNER, option, StrPtr(string), handle)
+	}
+
+
+	; Functions =========================================================================================================================================================
+
+	HideFocusBorder(wParam, lParam := "", Msg := "", hWnd := "")
+	{
+		static Affected         := Map()
+		static WM_UPDATEUISTATE := 0x0128
+		static UIS_SET          := 1
+		static UISF_HIDEFOCUS   := 0x1
+		static SET_HIDEFOCUS    := UIS_SET << 16 | UISF_HIDEFOCUS
+		static init             := OnMessage(WM_UPDATEUISTATE, HideFocusBorder)
+
+		if (Msg = WM_UPDATEUISTATE)
+		{
+			if (wParam = SET_HIDEFOCUS)
+				Affected[hWnd] := true
+			else if (Affected.Has(hWnd))
+				PostMessage(WM_UPDATEUISTATE, SET_HIDEFOCUS, 0,, "ahk_id " hWnd)
+		}
+		else if (DllCall("user32\IsWindow", "Ptr", wParam, "UInt"))
+			PostMessage(WM_UPDATEUISTATE, SET_HIDEFOCUS, 0,, "ahk_id " wParam)
+	}
+
+
+	SetExplorerTheme(handle, WindowTheme := "Explorer")
+	{
+		if (DllCall("GetVersion", "UChar") > 5)
+		{
+			VarSetStrCapacity(&ClassName, 1024)
+			if (DllCall("user32\GetClassName", "Ptr", handle, "Str", ClassName, "Int", 512, "Int"))
+			{
+				if (ClassName = "SysListView32") || (ClassName = "SysTreeView32")
+					return !DllCall("uxtheme\SetWindowTheme", "Ptr", handle, "Str", WindowTheme, "Ptr", 0)
+			}
+		}
+		return false
 	}
 
 
