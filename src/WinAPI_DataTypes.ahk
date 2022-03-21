@@ -4,7 +4,7 @@
 	WinAPI_DataTypes (written in AutoHotkey)
 	Author ....: jNizM
 	Released ..: 2015-05-05
-	Modified ..: 2021-02-04
+	Modified ..: 2021-03-21
 	License ...: MIT
 	GitHub ....: https://github.com/jNizM/AutoHotkey_MSDN_Types
 	Forum .....: https://www.autohotkey.com/boards/viewtopic.php?t=99817
@@ -14,7 +14,7 @@
 ; COMPILER DIRECTIVES =======================================================================================================================================================
 
 ;@Ahk2Exe-SetDescription    WinAPI_DataTypes (x64)
-;@Ahk2Exe-SetFileVersion    0.4
+;@Ahk2Exe-SetFileVersion    0.4.1
 ;@Ahk2Exe-SetProductName    WinAPI_DataTypes
 ;@Ahk2Exe-SetProductVersion 2.0-beta.3
 ;@Ahk2Exe-SetCopyright      (c) 2015-2022 jNizM
@@ -40,7 +40,7 @@ WinAPI_DataTypes(GuiTheme := "Light")
 {
 	static DATA_TYPES := CONST_DATA_TYPES()
 
-	App := Map("name", "WinAPI_DataTypes", "version", "0.4", "release", "2022-02-04", "author", "jNizM", "licence", "MIT")
+	App := Map("name", "WinAPI_DataTypes", "version", "0.4.1", "release", "2022-02-04", "author", "jNizM", "licence", "MIT")
 
 
 	; TRAY ==============================================================================================================================================================
@@ -333,7 +333,7 @@ WinAPI_DataTypes(GuiTheme := "Light")
 		DATA_TYPES["UINT8"] := ["UINT8","UChar","",1,1,"typedef unsigned char UINT8"]
 		DATA_TYPES["UINT16"] := ["UINT16","UShort","",2,2,"typedef unsigned short UINT16"]
 		DATA_TYPES["UINT32"] := ["UINT32","UInt","",4,4,"typedef unsigned int UINT32"]
-		DATA_TYPES["UINT64"] := ["UINT64","Int64","",8,8,"typedef usigned __int 64 UINT64"]
+		DATA_TYPES["UINT64"] := ["UINT64","Int64","",8,8,"typedef unsigned __int 64 UINT64"]
 		DATA_TYPES["ULONG"] := ["ULONG","UInt","",4,4,"typedef unsigned long ULONG"]
 		DATA_TYPES["ULONGLONG"] := ["ULONGLONG","Int64","",8,8,"typedef unsigned __int64 ULONGLONG"]
 		DATA_TYPES["ULONG_PTR"] := ["ULONG_PTR","UPtr","",4,8,"typedef unsigned long ULONG_PTR / unsigned __int64 ULONG_PTR"]
